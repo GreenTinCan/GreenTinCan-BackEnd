@@ -1,10 +1,10 @@
-package server.greentincan;
+package server.protalktime;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class GreenTinCanApplicationTests {
+class ProTalkTimeApplicationTests {
 
     @Test
     void contextLoads() {
