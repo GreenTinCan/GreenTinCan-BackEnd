@@ -1,14 +1,10 @@
-package travelfeeldog.infra.aws.s3.api;
+package server.protalktime.infra.aws.s3.api;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import lombok.AllArgsConstructor;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import travelfeeldog.global.common.dto.ApiResponse;
-import travelfeeldog.infra.aws.s3.dto.AwsS3ImageDtos.ImageDto;
-import travelfeeldog.infra.aws.s3.dto.AwsS3ImageDtos.ImagesResponseDto;
-import travelfeeldog.infra.aws.s3.service.AwsS3ImageService;
+import server.protalktime.common.dto.ApiResponse;
+import server.protalktime.infra.aws.s3.dto.AwsS3ImageDtos.ImageDto;
+import server.protalktime.infra.aws.s3.dto.AwsS3ImageDtos.ImagesResponseDto;
+import server.protalktime.infra.aws.s3.service.AwsS3ImageService;
 
 @RestController
 @RequestMapping("/file")

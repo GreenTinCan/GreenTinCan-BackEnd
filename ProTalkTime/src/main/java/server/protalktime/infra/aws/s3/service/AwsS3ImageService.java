@@ -1,27 +1,24 @@
-package travelfeeldog.infra.aws.s3.service;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ByteArrayInputStream;
+package server.protalktime.infra.aws.s3.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Arrays;
+
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import travelfeeldog.infra.aws.s3.model.S3Image;
-import travelfeeldog.infra.aws.s3.dao.AwsS3ImageRepository;
-import travelfeeldog.infra.aws.s3.dto.AwsS3ImageDtos.ImageDto;
+import org.springframework.web.multipart.MultipartFile;
+import server.protalktime.infra.aws.s3.dao.AwsS3ImageRepository;
+import server.protalktime.infra.aws.s3.dto.AwsS3ImageDtos.ImageDto;
+import server.protalktime.infra.aws.s3.model.S3Image;
 
 @Transactional(readOnly = true)
 @Service

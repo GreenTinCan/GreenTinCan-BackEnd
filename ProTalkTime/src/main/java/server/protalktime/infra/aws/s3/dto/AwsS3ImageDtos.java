@@ -1,10 +1,8 @@
-package travelfeeldog.infra.aws.s3.dto;
+package server.protalktime.infra.aws.s3.dto;
 
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import travelfeeldog.infra.aws.s3.model.S3Image;
+import server.protalktime.infra.aws.s3.model.S3Image;
 
 public class AwsS3ImageDtos {
     @Data

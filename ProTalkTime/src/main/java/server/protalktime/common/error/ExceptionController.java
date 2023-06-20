@@ -1,15 +1,15 @@
-package travelfeeldog.global.common.error;
+package server.protalktime.common.error;
 
-import travelfeeldog.global.common.dto.ApiResponse;
 import java.security.SignatureException;
 import javax.naming.ServiceUnavailableException;
 import javax.persistence.NoResultException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MissingRequestHeaderException;
-import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
+import server.protalktime.common.dto.ApiResponse;
 
 
 @RestControllerAdvice

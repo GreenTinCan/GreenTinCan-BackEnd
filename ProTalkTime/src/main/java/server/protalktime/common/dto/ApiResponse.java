@@ -1,4 +1,4 @@
-package travelfeeldog.global.common.dto;
+package server.protalktime.common.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

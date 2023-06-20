@@ -1,4 +1,4 @@
-package travelfeeldog.global.common.model;
+package server.protalktime.common.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

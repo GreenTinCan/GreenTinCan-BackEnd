@@ -1,4 +1,4 @@
-package server.protalktime.infra.aws.s3.;
+package server.protalktime.infra.aws.s3.config;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
