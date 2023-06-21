@@ -17,6 +17,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 import server.protalktime.chat.domain.model.Room;
+import server.protalktime.gather.dto.GatherDtos.GatherCreateRequestDto;
 import server.protalktime.member.domain.model.Member;
 
 @Getter @Setter
@@ -37,13 +38,12 @@ public class Gather {
 
     @Column(name = "gather_doctor_number")
     private int dNum;
-    @Column(name = "gather_account_number")
+    @Column(name = "gather_accountant_number")
     private int aNum;
     @Column(name = "gather_lawyer_number")
     private int lNum;
     @Column(name = "gather_judical_number")
     private int jNum;
-
 
     @ColumnDefault("1")
     private int maxNumber;
@@ -59,4 +59,8 @@ public class Gather {
 
     @OneToOne(mappedBy = "gather",cascade = CascadeType.PERSIST)
     private Room room;
+    public Gather(GatherCreateRequestDto requestDto,Member member,Room room){
+        this.member = member;
+        this.room = room;
+    }
 }

@@ -14,7 +14,8 @@ import server.protalktime.gather.domain.application.GatherService;
 import server.protalktime.gather.dto.GatherDtos.GatherCreateRequestDto;
 import server.protalktime.gather.dto.GatherDtos.GatherCreateResponse;
 import server.protalktime.gather.dto.GatherDtos.GatherDetailDto;
-import server.protalktime.gather.dto.GatherDtos.GatherRequestDto;
+import server.protalktime.gather.dto.GatherDtos.GatherDetailResponseDto;
+
 
 @RequiredArgsConstructor
 @RestController
@@ -27,8 +28,8 @@ public class GatherApiController {
         return ApiResponse.success(gatherService.createGather(requestDto));
     }
     @GetMapping(value = "/all",produces = "application/json;charset=UTF-8")
-    public ApiResponse<List<GatherRequestDto>> getGathersForList() {
-        return ApiResponse.success(gatherService.getAllGathersForList());
+    public ApiResponse<List<GatherDetailResponseDto>> getGathersForList(@RequestHeader("Authorization") String token,@RequestParam("gatherLocation") String gatherLocation) {
+        return ApiResponse.success(gatherService.getAllGathersForList(gatherLocation));
     }
 //    @PostMapping(value = "/total", produces = "application/json;charset=UTF-8"
     @GetMapping(produces = "application/json;charset=UTF-8")
