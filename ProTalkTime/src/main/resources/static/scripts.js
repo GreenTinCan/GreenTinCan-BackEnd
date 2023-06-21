@@ -9,13 +9,6 @@ $(document).ready(function() {
     sendMessage();
   });
 
-  $("#send-private").click(function() {
-    sendPrivateMessage();
-  });
-
-  $("#notifications").click(function() {
-    resetNotificationCount();
-  });
 });
 
 function connect() {
@@ -26,19 +19,35 @@ function connect() {
     updateNotificationDisplay();
 
     stompClient.subscribe('/sub/chat/room/1', function (message) {
-      showMessage(JSON.parse(message.body).content);
+      showMessage(JSON.parse(message.body));
     });
 
   });
 }
 
-function showMessage(message) {
-  $("#messages").append("<tr><td>" + message + "</td></tr>");
+function showMessage(givenMessage) {
+  try {
+    var messageContent = givenMessage.message;
+    var type = givenMessage.type;
+    // var roomId = parsedMessage.roomId;
+    // var sender = parsedMessage.sender;
+    $("#messages").append("<tr><td>" + messageContent + "</td></tr>");
+    $("#messages").append("<tr><td>" + type + "</td></tr>");
+  } catch (error) {
+    console.error("Error parsing JSON:", error);
+  }
 }
 
 function sendMessage() {
   console.log("sending message");
-  stompClient.send("/sub/chat/room/1", {}, JSON.stringify({'messageContent': $("#message").val()}));
+  var messageContent = $("#message").val();
+  var message = {
+    message: messageContent,
+    type: "TEXT"
+  };
+  stompClient.send("/sub/chat/room/1", {}, JSON.stringify(message));
+  // console.log("sending message");
+  // stompClient.send("/sub/chat/room/1", {}, JSON.stringify({'message': $("#message").val()}));
 }
 
 
@@ -49,9 +58,6 @@ function updateNotificationDisplay() {
     $('#notifications').show();
     $('#notifications').text(notificationCount);
   }
+
 }
 
-function resetNotificationCount() {
-  notificationCount = 0;
-  updateNotificationDisplay();
-}
