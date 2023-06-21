@@ -35,6 +35,16 @@ public class Gather {
     private Boolean offline;
     private String sex; //남성 ,여성, 남성 여성
 
+    @Column(name = "gather_doctor_number")
+    private int dNum;
+    @Column(name = "gather_account_number")
+    private int aNum;
+    @Column(name = "gather_lawyer_number")
+    private int lNum;
+    @Column(name = "gather_judical_number")
+    private int jNum;
+
+
     @ColumnDefault("1")
     private int maxNumber;
 
