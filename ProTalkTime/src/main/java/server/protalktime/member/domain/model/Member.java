@@ -3,9 +3,9 @@ package server.protalktime.member.domain.model;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
-import server.protalktime.categories.domain.model.Career;
 import server.protalktime.common.model.BaseTimeEntity;
 import server.protalktime.gather.domain.model.Gather;
+import server.protalktime.member.dto.MemberDtos;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -54,9 +54,7 @@ public class Member extends BaseTimeEntity{
     @ColumnDefault("'url'")
     private String profileUrl;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name = "career_id")
-    private Career career;
+    private String career; //only Eng.
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Gather> gathers = new ArrayList<>();
@@ -71,7 +69,7 @@ public class Member extends BaseTimeEntity{
                    boolean oneToOne,
                    boolean married,
                    boolean varified,
-                   Career career){
+                   String career){
         this.id = id;
         this.nickName = nickName;
         this.realName = realName;
@@ -84,21 +82,30 @@ public class Member extends BaseTimeEntity{
         this.career = career;
     }
 
-    public static Member create(Long id,
-                                String nickName,
+    public static Member create(String nickName,
                                 String realName,
                                 String sex,
                                 String workPlace,
                                 boolean married,
-                                Career career) {
+                                String career) {
         return Member.builder()
-                .id(id)
                 .nickName(nickName)
                 .realName(realName)
                 .sex(sex)
                 .workPlace(workPlace)
                 .married(married)
                 .career(career)
+                .build();
+    }
+
+    public static Member create(MemberDtos.MemberPostRequestDto memberPostRequestDto) {
+        return Member.builder()
+                .nickName(memberPostRequestDto.getNickName())
+                .realName(memberPostRequestDto.getRealName())
+                .sex(memberPostRequestDto.getSex())
+                .workPlace(memberPostRequestDto.getWorkPlace())
+                .married(memberPostRequestDto.isMarried())
+                .career(memberPostRequestDto.getCareer())
                 .build();
     }
 }
