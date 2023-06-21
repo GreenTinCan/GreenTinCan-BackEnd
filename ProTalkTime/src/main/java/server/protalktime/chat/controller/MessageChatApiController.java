@@ -1,20 +1,20 @@
 package server.protalktime.chat.controller;
 
-import lombok.AllArgsConstructor;
-import org.springframework.messaging.simp.SimpMessageSendingOperations;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import server.protalktime.chat.domain.application.ChatService;
 import server.protalktime.chat.domain.model.ChatMessage;
+import server.protalktime.common.dto.ApiResponse;
 
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class MessageChatApiController {
-    private final SimpMessageSendingOperations messagingTemplate;
-
+    private final ChatService chatService;
     @PostMapping("/chat/send")
-    public void sendMessage(@RequestBody ChatMessage message) {
-        messagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
-
+    public ApiResponse sendMessage(@RequestBody ChatMessage message) {
+        chatService.convertAndSend(message);
+        return ApiResponse.success(message.getMessage());
     }
 }
