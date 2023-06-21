@@ -6,9 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import lombok.Getter;
+import lombok.Setter;
 import server.protalktime.common.model.BaseTimeEntity;
 
-@Getter
+@Getter @Setter
 @Entity
 public class Room extends BaseTimeEntity {
     @Id
@@ -19,6 +20,9 @@ public class Room extends BaseTimeEntity {
     @Column(name="room_name")
     private String name;
 
-    @Column(name="room_name")
+    @Column(name="room_one_to_one_chat")
     private Boolean oneToOneChat;
+    public void modifyRoomChatOption(Boolean option) {
+        this.oneToOneChat = option;
+    }
 }
