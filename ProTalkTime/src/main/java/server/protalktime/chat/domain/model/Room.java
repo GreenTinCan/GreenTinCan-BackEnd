@@ -30,7 +30,10 @@ public class Room extends BaseTimeEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "gather_id")
     private Gather gather;
-
+    public Room(String name , Boolean oneToOneChat) {
+        this.name=name ;
+        this.oneToOneChat = oneToOneChat ;
+    }
     public void modifyRoomChatOption(Boolean option) {
         this.oneToOneChat = option;
     }

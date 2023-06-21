@@ -14,12 +14,14 @@ import server.protalktime.chat.infrastructure.RoomRepository;
 public class RoomService {
     private final RoomRepository roomRepository;
     @Transactional
-    public Room createChatRoom(String name) {
-        Room room = new Room();
+    public Room createChatRoom(String name,Boolean oneToOne) {
+        Room room = new Room(name,oneToOne);
         roomRepository.save(room);
         return room;
     }
-
+    public Long createGatherRoom(String name){
+        return createChatRoom(name,false).getId();
+    }
     public List<Room> getAllRoom() {
         return roomRepository.findAll();
     }

@@ -25,7 +25,7 @@ public class RoomApiController {
 
     @PostMapping("/room")
     public ApiResponse<Room> createRoom(@RequestParam String name) {
-        return ApiResponse.success(roomService.createChatRoom(name));
+        return ApiResponse.success(roomService.createChatRoom(name,true));
     }
 
     @GetMapping("/room/{roomId}")
