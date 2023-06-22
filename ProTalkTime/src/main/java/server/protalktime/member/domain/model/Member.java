@@ -52,7 +52,6 @@ public class Member extends BaseTimeEntity{
     private boolean varified;
 
     @Column(name = "profile_url")
-    @ColumnDefault("'url'")
     private String profileUrl = "url";
 
     private String career; //only Eng.

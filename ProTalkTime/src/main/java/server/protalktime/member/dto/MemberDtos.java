@@ -23,7 +23,7 @@ public class MemberDtos {
     @Data
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class MemberResponse {
-        Long id;
+        Long memberId;
         String nickName;
         String realName;
         String sex;
@@ -33,7 +33,7 @@ public class MemberDtos {
         String profileUrl;
 
         public MemberResponse(Member member) {
-            this.id = member.getId();
+            this.memberId = member.getId();
             this.nickName = member.getNickName();
             this.realName = member.getRealName();
             this.sex = member.getSex();
@@ -48,7 +48,7 @@ public class MemberDtos {
     @Data
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class MemberSelfResponse {
-        Long id;
+        Long memberId;
         String nickName;
         String realName;
         String sex;
@@ -61,7 +61,7 @@ public class MemberDtos {
         String profileUrl;
 
         public MemberSelfResponse(Member member) {
-            this.id = member.getId();
+            this.memberId = member.getId();
             this.nickName = member.getNickName();
             this.realName = member.getRealName();
             this.sex = member.getSex();
