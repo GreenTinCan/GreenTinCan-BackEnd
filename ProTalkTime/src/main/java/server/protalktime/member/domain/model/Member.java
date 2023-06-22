@@ -3,6 +3,7 @@ package server.protalktime.member.domain.model;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
+import server.protalktime.chat.domain.model.RoomMember;
 import server.protalktime.common.model.BaseTimeEntity;
 import server.protalktime.gather.domain.model.Gather;
 import server.protalktime.member.dto.MemberDtos;
@@ -52,12 +53,15 @@ public class Member extends BaseTimeEntity{
 
     @Column(name = "profile_url")
     @ColumnDefault("'url'")
-    private String profileUrl;
+    private String profileUrl = "url";
 
     private String career; //only Eng.
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Gather> gathers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<RoomMember> roomMembers = new ArrayList<>();
 
     @Builder
     private Member(Long id,
