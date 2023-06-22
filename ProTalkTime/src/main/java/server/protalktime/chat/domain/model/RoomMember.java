@@ -11,12 +11,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import server.protalktime.member.domain.model.Member;
 
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 public class RoomMember {
 
     @Id
@@ -31,5 +33,9 @@ public class RoomMember {
     @ManyToOne(fetch = LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "room_id")
     private Room room ;
+    public RoomMember(Room room , Member member) {
+        this.member = member;
+        this.room = room;
+    }
 
 }
