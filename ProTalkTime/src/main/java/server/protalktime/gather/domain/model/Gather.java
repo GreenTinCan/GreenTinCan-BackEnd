@@ -19,7 +19,6 @@ import server.protalktime.chat.domain.model.Room;
 import server.protalktime.member.domain.model.Member;
 
 @Getter @Setter
-@Table(name = "gather")
 @Entity
 public class Gather {
     @Id
