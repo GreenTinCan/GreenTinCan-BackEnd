@@ -19,7 +19,7 @@ public class ShortMeetDtos {
         public ShortMeetResponseDto(ShortMeet shortMeet){
             this.shortMeetId = shortMeet.getId();
             this.memberCareer = shortMeet.getMember().getCareer();
-            this.type = shortMeet.getTitle();
+            this.type = shortMeet.getType();
             this.title = shortMeet.getTitle();
             this.location = shortMeet.getLocation();
         }
@@ -65,7 +65,7 @@ public class ShortMeetDtos {
             this.memberSex = shortMeet.getMember().getSex();
             this.memberImageUrl = shortMeet.getMember().getProfileUrl();
             this.memberCareer = shortMeet.getMember().getCareer();
-            this.type = shortMeet.getTitle();
+            this.type = shortMeet.getType();
             this.title = shortMeet.getTitle();
             this.script = shortMeet.getScript();
             this.location = shortMeet.getLocation();
