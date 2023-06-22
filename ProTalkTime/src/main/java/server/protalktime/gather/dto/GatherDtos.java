@@ -8,6 +8,7 @@ import server.protalktime.gather.domain.model.Gather;
 public class GatherDtos {
     @Data
     public static class GatherResponseDto {
+        private Long gatherId;
         //memberInfo
         private Long memberId;
         private String memberNickName;
@@ -27,6 +28,7 @@ public class GatherDtos {
         private int femaleNum;
 
         public GatherResponseDto(Gather gather) {
+            this.gatherId = gather.getId();
             this.memberId = gather.getMember().getId();
             this.memberNickName = gather.getMember().getNickName();
             this.memberSex = gather.getMember().getSex();
@@ -63,13 +65,14 @@ public class GatherDtos {
         private String type; // 독서 , 스포츠
 
         private Boolean offline;
-        private String allowedsex; 
+        private String allowedsex;
         private int maxNumber;
     }
 
     @Data
     @NoArgsConstructor
     public static class GatherDetailDto{
+        private Long gatherId;
 
         private Long memberId;
         private String memberNickName;
@@ -90,6 +93,7 @@ public class GatherDtos {
         private int femaleNum;
         private Long roomId;
         public GatherDetailDto(Gather gather) {
+            this.gatherId = gather.getId();
             this.memberId = gather.getMember().getId();
             this.memberNickName = gather.getMember().getNickName();
             this.memberSex = gather.getMember().getSex();
