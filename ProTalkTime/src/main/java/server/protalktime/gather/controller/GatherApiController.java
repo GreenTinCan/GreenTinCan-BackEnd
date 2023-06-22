@@ -28,8 +28,8 @@ public class GatherApiController {
         return ApiResponse.success(gatherService.createGather(memberId,requestDto));
     }
     @GetMapping(value = "/join",produces = "application/json;charset=UTF-8")
-    public ApiResponse<String> joinGatherCheck(@RequestHeader("Authorization") Long memberId){
-        return ApiResponse.success(gatherService.checkGather(memberId));
+    public ApiResponse<String> joinGatherCheck(@RequestHeader("Authorization") Long memberId, @RequestParam("gatherId") Long gatherId){
+        return ApiResponse.success(gatherService.checkGather(memberId,gatherId));
     }
     @GetMapping(value = "/all",produces = "application/json;charset=UTF-8")
     public ApiResponse<List<GatherResponseDto>> getGathersForList(@RequestParam("gatherLocation") String gatherLocation,

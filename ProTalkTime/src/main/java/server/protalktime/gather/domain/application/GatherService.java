@@ -1,6 +1,7 @@
 package server.protalktime.gather.domain.application;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,12 @@ public class GatherService {
     private final GatherRepository gatherRepository;
     private final RoomService roomService;
     private final MemberService memberService;
+
+    public Gather findByGatherId(Long gatherId) {
+        return gatherRepository.findById(gatherId)
+            .orElseThrow(() -> new NoSuchElementException("Member not found by gatherId :" + gatherId));
+    }
+
     @Transactional
     public GatherCreateResponse createGather(Long memberId,GatherCreateRequestDto requestDto) {
         Room room = roomService.createChatRoom(requestDto.getTitle(),false);
@@ -54,8 +61,9 @@ public class GatherService {
         return new GatherDetailDto(gather);
     }
 
-    public String checkGather(Long memberId) {
-        //gathet\findbyid
-        return "ok";
+    public String checkGather(Long memberId,Long gatherId) {
+        Gather gather = findByGatherId(gatherId);
+        Member member = memberService.findByMemberId(memberId);
+        return gather.checkMemberEnter(member);
     }
 }
