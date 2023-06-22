@@ -11,7 +11,7 @@ import server.protalktime.common.dto.ApiResponse;
 @RequestMapping("/test")
 @AllArgsConstructor
 public class ConnectionCheckApi {
-    @GetMapping(value="/{testnumber}")
+    @GetMapping(value="/{testNumber}")
     public ApiResponse getConnectTest(@PathVariable Long testNumber){
         return ApiResponse.success(testNumber);
     }

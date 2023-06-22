@@ -1,6 +1,5 @@
 package server.protalktime.gather.dto;
 
-import javax.persistence.Column;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import server.protalktime.gather.domain.model.Gather;

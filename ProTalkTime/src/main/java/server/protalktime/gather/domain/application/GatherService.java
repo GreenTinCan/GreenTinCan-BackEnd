@@ -34,7 +34,7 @@ public class GatherService {
 
     @Transactional
     public GatherCreateResponse createGather(Long memberId,GatherCreateRequestDto requestDto) {
-        Room room = roomService.createChatRoom(requestDto.getTitle(),false);
+        Room room = roomService.createGatherRoom(memberId,requestDto.getTitle());
         Member member = memberService.findByMemberId(memberId);
         Gather gather = new Gather(requestDto,member,room);
         gatherRepository.save(gather);
