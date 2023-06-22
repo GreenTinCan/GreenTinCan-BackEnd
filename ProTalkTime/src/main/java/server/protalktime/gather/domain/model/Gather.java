@@ -67,6 +67,14 @@ public class Gather {
     public Gather(GatherCreateRequestDto requestDto,Member member,Room room){
         this.member = member;
         this.room = room;
+        this.title = requestDto.getTitle();
+        this.script = requestDto.getScript();
+        this.imageUrl = requestDto.getImageUrl();
+        this.location = requestDto.getLocation();
+        this.type = requestDto.getType();
+        this.offline = requestDto.getOffline();
+        this.allowedsex = requestDto.getAllowedsex();
+        this.maxNumber = requestDto.getMaxNumber();
     }
 
     public void modifyGatherBoardByEnterMember(Member member) {
