@@ -14,8 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 import server.protalktime.chat.domain.model.Room;
 import server.protalktime.gather.dto.GatherDtos.GatherCreateRequestDto;
 import server.protalktime.member.domain.model.Member;
@@ -23,6 +23,7 @@ import server.protalktime.member.domain.model.Member;
 @Getter @Setter
 @Table(name = "gather")
 @Entity
+@NoArgsConstructor
 public class Gather {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +35,7 @@ public class Gather {
     private String location; // 관악 ,여의도 강남
     private String type; // 독서 , 스포츠
     private Boolean offline;
-    private String sex; //남성 ,여성, 남성 여성
+    private String allowedsex; //male , female , male and female
 
     @Column(name = "gather_doctor_number")
     private int dNum;
@@ -45,10 +46,13 @@ public class Gather {
     @Column(name = "gather_judical_number")
     private int jNum;
 
-    @ColumnDefault("1")
+    @Column(name = "gather_male_number")
+    private int maleNum;
+    @Column(name = "gather_female_number")
+    private int femaleNum;
+
     private int maxNumber;
 
-    @ColumnDefault("1")
     private int currentNumber;
 
     private String imageUrl;
@@ -62,5 +66,40 @@ public class Gather {
     public Gather(GatherCreateRequestDto requestDto,Member member,Room room){
         this.member = member;
         this.room = room;
+        this.title = requestDto.getTitle();
+        this.script = requestDto.getScript();
+        this.imageUrl = requestDto.getImageUrl();
+        this.location = requestDto.getLocation();
+        this.type = requestDto.getType();
+        this.offline = requestDto.getOffline();
+        this.allowedsex = requestDto.getAllowedsex();
+        this.maxNumber = requestDto.getMaxNumber();
     }
+
+    public void modifyGatherBoardByEnterMember(Member member) {
+        this.currentNumber += 1;
+        String memberCareer = member.getCareer();
+        String memberSex = member.getSex();
+        if (memberSex.equals("male")) {
+            maleNum += 1;
+        } else {
+            femaleNum += 1;
+        }
+        switch (memberCareer) {
+            case "doctor" -> this.dNum += 1;
+            case "accountant" -> this.aNum += 1;
+            case "lawyer" -> this.lNum += 1;
+            case "judicial" -> this.jNum += 1;
+        }
+
+    }
+
+    public String checkMemberEnter(Member member) {
+        // logic for member enter check career sex whatever need
+        String memberCareer = member.getCareer();
+        if(this.currentNumber < this.maxNumber) return "ok";
+        else return "no";
+        //coul make code return room number when It can join gather
+    }
+
 }

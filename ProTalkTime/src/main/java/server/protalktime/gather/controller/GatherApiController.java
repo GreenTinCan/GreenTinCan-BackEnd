@@ -14,7 +14,7 @@ import server.protalktime.gather.domain.application.GatherService;
 import server.protalktime.gather.dto.GatherDtos.GatherCreateRequestDto;
 import server.protalktime.gather.dto.GatherDtos.GatherCreateResponse;
 import server.protalktime.gather.dto.GatherDtos.GatherDetailDto;
-import server.protalktime.gather.dto.GatherDtos.GatherDetailResponseDto;
+import server.protalktime.gather.dto.GatherDtos.GatherResponseDto;
 
 
 @RequiredArgsConstructor
@@ -24,16 +24,27 @@ public class GatherApiController {
     private final GatherService gatherService;
 
     @PostMapping(produces = "application/json;charset=UTF-8")
-    public ApiResponse<GatherCreateResponse> createGather(@RequestBody GatherCreateRequestDto requestDto){
-        return ApiResponse.success(gatherService.createGather(requestDto));
+    public ApiResponse<GatherCreateResponse> createGather(@RequestHeader("Authorization") Long memberId,@RequestBody GatherCreateRequestDto requestDto){
+        return ApiResponse.success(gatherService.createGather(memberId,requestDto));
     }
     @GetMapping(value = "/all",produces = "application/json;charset=UTF-8")
-    public ApiResponse<List<GatherDetailResponseDto>> getGathersForList(@RequestHeader("Authorization") String token,@RequestParam("gatherLocation") String gatherLocation) {
-        return ApiResponse.success(gatherService.getAllGathersForList(gatherLocation));
+    public ApiResponse<List<GatherResponseDto>> getGathersForList(@RequestHeader("Authorization") Long memberId,
+                        @RequestParam("gatherLocation") String gatherLocation,
+                        @RequestParam("gatherType") String gatherType) {
+        return ApiResponse.success(gatherService.getAllGathersForList(memberId,gatherLocation,gatherType));
     }
-//    @PostMapping(value = "/total", produces = "application/json;charset=UTF-8"
+
     @GetMapping(produces = "application/json;charset=UTF-8")
-    public ApiResponse<GatherDetailDto> getGatherDetail(@RequestParam("gatherNumber") Long gatherNumber, @RequestHeader("Authorization") String token) {
-        return ApiResponse.success(gatherService.getGatherDetailByGatherId(gatherNumber));
+    public ApiResponse<GatherDetailDto> getGatherDetail(@RequestHeader("Authorization") Long memberId,@RequestParam("gatherId") Long gatherId) {
+        return ApiResponse.success(gatherService.getGatherDetailByGatherId(memberId,gatherId));
+    }
+    @GetMapping(value = "/join",produces = "application/json;charset=UTF-8")
+    public ApiResponse<String> joinGatherCheck(@RequestHeader("Authorization") Long memberId, @RequestParam("gatherId") Long gatherId){
+        return ApiResponse.success(gatherService.checkGather(memberId,gatherId));
+    }
+    @GetMapping(value = "/search",produces = "application/json;charset=UTF-8")
+    public ApiResponse<List<GatherResponseDto>> getGathersBySearchForList(@RequestHeader("Authorization") Long memberId,
+                    @RequestParam("searchText") String searchText) {
+        return ApiResponse.success(gatherService.getAllGathersBySearchForList(memberId,searchText));
     }
 }
