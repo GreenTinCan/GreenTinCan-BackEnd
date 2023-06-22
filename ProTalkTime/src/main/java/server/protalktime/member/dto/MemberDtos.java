@@ -30,6 +30,7 @@ public class MemberDtos {
         String workPlace;
         boolean married;
         String career;
+        String profileUrl;
 
         public MemberResponse(Member member) {
             this.id = member.getId();
@@ -39,6 +40,8 @@ public class MemberDtos {
             this.workPlace = member.getWorkPlace();
             this.married = member.isMarried();
             this.career = member.getCareer();
+            if(member.getProfileUrl().isEmpty()){ this.profileUrl = "url"; }
+            else { this.profileUrl = member.getProfileUrl(); }
         }
     }
 
@@ -68,6 +71,8 @@ public class MemberDtos {
             this.varified = member.isVarified();
             this.married = member.isMarried();
             this.career = member.getCareer();
+            if(member.getProfileUrl().isEmpty()){ this.profileUrl = "url"; }
+            else { this.profileUrl = member.getProfileUrl(); }
         }
     }
 
