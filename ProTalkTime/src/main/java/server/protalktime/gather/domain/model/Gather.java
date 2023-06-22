@@ -21,7 +21,6 @@ import server.protalktime.gather.dto.GatherDtos.GatherCreateRequestDto;
 import server.protalktime.member.domain.model.Member;
 
 @Getter @Setter
-@Table(name = "gather")
 @Entity
 @NoArgsConstructor
 public class Gather {
