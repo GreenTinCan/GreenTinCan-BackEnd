@@ -35,11 +35,16 @@ public class GatherService {
         return new GatherCreateResponse(room.getId());
     }
 
-    public List<GatherResponseDto> getAllGathersForList(String givenLocation) {
+    public List<GatherResponseDto> getAllGathersForList(String givenLocation,String givenType) {
         List<Gather> gathers = gatherRepository.findAll();
+
         List<Gather> filteredGathers = gathers.stream()
             .filter(gather -> gather.getLocation().equals(givenLocation)).toList();
-        return filteredGathers.stream()
+
+        List<Gather> gathersResult = filteredGathers.stream()
+            .filter(gather -> gather.getType().equals(givenType)).toList();
+
+        return gathersResult.stream()
             .map(GatherResponseDto::new)
             .collect(Collectors.toList());
     }
@@ -47,5 +52,10 @@ public class GatherService {
         Gather gather = gatherRepository.findById(gatherNumber)
             .orElseThrow(() -> new EntityNotFoundException("Place not found with ID"));
         return new GatherDetailDto(gather);
+    }
+
+    public String checkGather(Long memberId) {
+        //gathet\findbyid
+        return "ok";
     }
 }

@@ -27,11 +27,16 @@ public class GatherApiController {
     public ApiResponse<GatherCreateResponse> createGather(@RequestHeader("Authorization") Long memberId,@RequestBody GatherCreateRequestDto requestDto){
         return ApiResponse.success(gatherService.createGather(memberId,requestDto));
     }
-    @GetMapping(value = "/all",produces = "application/json;charset=UTF-8")
-    public ApiResponse<List<GatherResponseDto>> getGathersForList(@RequestParam("gatherLocation") String gatherLocation) {
-        return ApiResponse.success(gatherService.getAllGathersForList(gatherLocation));
+    @GetMapping(value = "/join",produces = "application/json;charset=UTF-8")
+    public ApiResponse<String> joinGatherCheck(@RequestHeader("Authorization") Long memberId){
+        return ApiResponse.success(gatherService.checkGather(memberId));
     }
-//    @PostMapping(value = "/total", produces = "application/json;charset=UTF-8"
+    @GetMapping(value = "/all",produces = "application/json;charset=UTF-8")
+    public ApiResponse<List<GatherResponseDto>> getGathersForList(@RequestParam("gatherLocation") String gatherLocation,
+                        @RequestParam("gatherType") String gatherType) {
+        return ApiResponse.success(gatherService.getAllGathersForList(gatherLocation,gatherType));
+    }
+
     @GetMapping(produces = "application/json;charset=UTF-8")
     public ApiResponse<GatherDetailDto> getGatherDetail(@RequestParam("gatherNumber") Long gatherNumber) {
         return ApiResponse.success(gatherService.getGatherDetailByGatherId(gatherNumber));
