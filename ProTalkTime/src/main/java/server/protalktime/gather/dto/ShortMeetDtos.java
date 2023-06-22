@@ -57,7 +57,6 @@ public class ShortMeetDtos {
         private String title;
         private String script;
         private String location;
-
         private Long roomId;
         public ShortMeetDetailDto(ShortMeet shortMeet) {
             this.shortMeetId = shortMeet.getId();
@@ -70,6 +69,7 @@ public class ShortMeetDtos {
             this.title = shortMeet.getTitle();
             this.script = shortMeet.getScript();
             this.location = shortMeet.getLocation();
+            this.roomId = shortMeet.getRoom().getId();
         }
     }
 }
