@@ -36,8 +36,7 @@ public class Room extends BaseTimeEntity {
     @Column(name="room_origin")
     private String origin; //  LIGHTING , OTO (1:1 ), GATHER
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "gather_id")
+    @OneToOne(mappedBy = "room", cascade = CascadeType.ALL)
     private Gather gather;
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
