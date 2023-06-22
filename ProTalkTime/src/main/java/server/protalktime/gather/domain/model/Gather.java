@@ -95,12 +95,10 @@ public class Gather {
 
     }
 
-    public String checkMemberEnter(Member member) {
+    public Boolean checkMemberEnter(Member member) {
         // logic for member enter check career sex whatever need
         String memberCareer = member.getCareer();
-        if(this.currentNumber < this.maxNumber) return "ok";
-        else return "no";
-        //coul make code return room number when It can join gather
+        return this.currentNumber < this.maxNumber;
     }
 
 }
