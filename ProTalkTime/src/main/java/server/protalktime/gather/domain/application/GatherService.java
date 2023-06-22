@@ -13,7 +13,7 @@ import server.protalktime.gather.domain.model.Gather;
 import server.protalktime.gather.dto.GatherDtos.GatherCreateRequestDto;
 import server.protalktime.gather.dto.GatherDtos.GatherCreateResponse;
 import server.protalktime.gather.dto.GatherDtos.GatherDetailDto;
-import server.protalktime.gather.dto.GatherDtos.GatherDetailResponseDto;
+import server.protalktime.gather.dto.GatherDtos.GatherResponseDto;
 import server.protalktime.gather.infrastructure.GatherRepository;
 import server.protalktime.member.domain.application.MemberService;
 import server.protalktime.member.domain.model.Member;
@@ -26,18 +26,22 @@ public class GatherService {
     private final RoomService roomService;
     private final MemberService memberService;
     @Transactional
-    public GatherCreateResponse createGather(GatherCreateRequestDto requestDto) {
+    public GatherCreateResponse createGather(Long memberId,GatherCreateRequestDto requestDto) {
         Room room = roomService.createChatRoom(requestDto.getTitle(),false);
-        Member member = memberService.findByMemberId(requestDto.getMemberId());
+        Member member = memberService.findByMemberId(memberId);
         Gather gather = new Gather(requestDto,member,room);
         gatherRepository.save(gather);
+        gather.modifyGatherBoardByEnterMember(member);
         return new GatherCreateResponse(room.getId());
     }
 
-    public List<GatherDetailResponseDto> getAllGathersForList(String location) {
+    public List<GatherResponseDto> getAllGathersForList(String givenLocation) {
         List<Gather> gathers = gatherRepository.findAll();
-
-        return gathers.stream().map(GatherDetailResponseDto::new).collect(Collectors.toList());
+        List<Gather> filteredGathers = gathers.stream()
+            .filter(gather -> gather.getLocation().equals(givenLocation)).toList();
+        return filteredGathers.stream()
+            .map(GatherResponseDto::new)
+            .collect(Collectors.toList());
     }
     public GatherDetailDto getGatherDetailByGatherId(Long gatherNumber) {
         Gather gather = gatherRepository.findById(gatherNumber)

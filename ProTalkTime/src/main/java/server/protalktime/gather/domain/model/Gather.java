@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 import server.protalktime.chat.domain.model.Room;
@@ -23,6 +24,7 @@ import server.protalktime.member.domain.model.Member;
 @Getter @Setter
 @Table(name = "gather")
 @Entity
+@NoArgsConstructor
 public class Gather {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +36,7 @@ public class Gather {
     private String location; // 관악 ,여의도 강남
     private String type; // 독서 , 스포츠
     private Boolean offline;
-    private String sex; //남성 ,여성, 남성 여성
+    private String allowedsex; //male , female , male and female
 
     @Column(name = "gather_doctor_number")
     private int dNum;
@@ -45,10 +47,13 @@ public class Gather {
     @Column(name = "gather_judical_number")
     private int jNum;
 
-    @ColumnDefault("1")
+    @Column(name = "gather_male_number")
+    private int maleNum;
+    @Column(name = "gather_female_number")
+    private int femaleNum;
+
     private int maxNumber;
 
-    @ColumnDefault("1")
     private int currentNumber;
 
     private String imageUrl;
@@ -62,5 +67,23 @@ public class Gather {
     public Gather(GatherCreateRequestDto requestDto,Member member,Room room){
         this.member = member;
         this.room = room;
+    }
+
+    public void modifyGatherBoardByEnterMember(Member member) {
+        this.currentNumber += 1;
+        String memberCareer = member.getCareer();
+        String memberSex = member.getSex();
+        if (memberSex.equals("male")) {
+            maleNum += 1;
+        } else {
+            femaleNum += 1;
+        }
+        switch (memberCareer) {
+            case "doctor" -> this.dNum += 1;
+            case "accountant" -> this.aNum += 1;
+            case "lawyer" -> this.lNum += 1;
+            case "judicial" -> this.jNum += 1;
+        }
+
     }
 }

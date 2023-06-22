@@ -14,7 +14,7 @@ import server.protalktime.gather.domain.application.GatherService;
 import server.protalktime.gather.dto.GatherDtos.GatherCreateRequestDto;
 import server.protalktime.gather.dto.GatherDtos.GatherCreateResponse;
 import server.protalktime.gather.dto.GatherDtos.GatherDetailDto;
-import server.protalktime.gather.dto.GatherDtos.GatherDetailResponseDto;
+import server.protalktime.gather.dto.GatherDtos.GatherResponseDto;
 
 
 @RequiredArgsConstructor
@@ -24,16 +24,16 @@ public class GatherApiController {
     private final GatherService gatherService;
 
     @PostMapping(produces = "application/json;charset=UTF-8")
-    public ApiResponse<GatherCreateResponse> createGather(@RequestBody GatherCreateRequestDto requestDto){
-        return ApiResponse.success(gatherService.createGather(requestDto));
+    public ApiResponse<GatherCreateResponse> createGather(@RequestHeader("Authorization") Long memberId,@RequestBody GatherCreateRequestDto requestDto){
+        return ApiResponse.success(gatherService.createGather(memberId,requestDto));
     }
     @GetMapping(value = "/all",produces = "application/json;charset=UTF-8")
-    public ApiResponse<List<GatherDetailResponseDto>> getGathersForList(@RequestHeader("Authorization") String token,@RequestParam("gatherLocation") String gatherLocation) {
+    public ApiResponse<List<GatherResponseDto>> getGathersForList(@RequestParam("gatherLocation") String gatherLocation) {
         return ApiResponse.success(gatherService.getAllGathersForList(gatherLocation));
     }
 //    @PostMapping(value = "/total", produces = "application/json;charset=UTF-8"
     @GetMapping(produces = "application/json;charset=UTF-8")
-    public ApiResponse<GatherDetailDto> getGatherDetail(@RequestParam("gatherNumber") Long gatherNumber, @RequestHeader("Authorization") String token) {
+    public ApiResponse<GatherDetailDto> getGatherDetail(@RequestParam("gatherNumber") Long gatherNumber) {
         return ApiResponse.success(gatherService.getGatherDetailByGatherId(gatherNumber));
     }
 }
