@@ -25,7 +25,7 @@ public class RoomApiController {
 
     @PostMapping(value = "/room",produces = "application/json;charset=UTF-8") // test
     public ApiResponse<RoomResponseDto> createRoom(@RequestHeader("Authorization") Long memberId,@RequestParam String name) {
-        return ApiResponse.success(new RoomResponseDto(roomService.createGatherRoom(memberId,name)));
+        return ApiResponse.success(new RoomResponseDto(roomService.createRoomByFlag(memberId,name,"GATHER")));
     }
 
     //list for chat members
