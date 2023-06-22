@@ -62,7 +62,7 @@ public class GatherService {
         return new GatherDetailDto(gather);
     }
 
-    public String checkGather(Long memberId,Long gatherId) {
+    public Boolean checkGather(Long memberId,Long gatherId) {
         Gather gather = findByGatherId(gatherId);
         Member member = memberService.findByMemberId(memberId);
         return gather.checkMemberEnter(member);

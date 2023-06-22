@@ -39,7 +39,7 @@ public class GatherApiController {
         return ApiResponse.success(gatherService.getGatherDetailByGatherId(memberId,gatherId));
     }
     @GetMapping(value = "/join",produces = "application/json;charset=UTF-8")
-    public ApiResponse<String> joinGatherCheck(@RequestHeader("Authorization") Long memberId, @RequestParam("gatherId") Long gatherId){
+    public ApiResponse<Boolean> joinGatherCheck(@RequestHeader("Authorization") Long memberId, @RequestParam("gatherId") Long gatherId){
         return ApiResponse.success(gatherService.checkGather(memberId,gatherId));
     }
     @GetMapping(value = "/search",produces = "application/json;charset=UTF-8")

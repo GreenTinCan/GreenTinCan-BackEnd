@@ -23,7 +23,8 @@ public class RoomApiController {
         return ApiResponse.success(roomService.getAllRoom());
     }
 
-    @PostMapping(value = "/room",produces = "application/json;charset=UTF-8") // test
+    // test
+    @PostMapping(value = "/room/test",produces = "application/json;charset=UTF-8")
     public ApiResponse<RoomResponseDto> createRoom(@RequestHeader("Authorization") Long memberId,@RequestParam String name) {
         return ApiResponse.success(new RoomResponseDto(roomService.createRoomByFlag(memberId,name,"GATHER")));
     }
@@ -37,5 +38,9 @@ public class RoomApiController {
     @GetMapping(value = "/room",produces = "application/json;charset=UTF-8")
     public ApiResponse<List<RoomsResponseItemDto>> chatRoomPersonalList(@RequestHeader("Authorization") Long memberId) {
         return ApiResponse.success(roomService.findAllByMemberId(memberId));
+    }
+    @PostMapping(value = "/room/join",produces = "application/json;charset=UTF-8")
+    public ApiResponse<String> joinRoom(@RequestHeader("Authorization") Long memberId,@RequestParam Long roomId) {
+        return ApiResponse.success(roomService.joinRoom(memberId,roomId));
     }
 }

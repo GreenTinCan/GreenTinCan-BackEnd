@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import server.protalktime.chat.domain.model.Room;
@@ -20,6 +21,7 @@ import server.protalktime.member.domain.model.Member;
 @Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class RoomService {
     private final RoomRepository roomRepository;
     private final RoomMemberRepository roomMemberRepository;
@@ -39,7 +41,18 @@ public class RoomService {
         roomMemberRepository.save(roomMember);
         return room;
     }
-
+    @Transactional
+    public String joinRoom(Long memberId,Long roomId) {
+        if (roomMemberRepository.findByMemberIdAndRoomId(memberId, roomId).isPresent()) {
+            log.info("!!!!");
+            throw new RuntimeException("Already joined in room");
+        }
+        Member member = memberService.findByMemberId(memberId);
+        Room room = findRoomById(roomId);
+        RoomMember roomMember = new RoomMember(room,member);
+        roomMemberRepository.save(roomMember);
+        return roomMember.getId().toString();
+    }
 
     /**
      * 1 대 1 채팅 또는 랜덤 채팅후 다른 사람과의 채팅을 생성시
@@ -64,14 +77,14 @@ public class RoomService {
     public List<Room> getAllRoom() {
         return roomRepository.findAll();
     }
-    public Room  findRoomById(Long roomId) {
-        return roomRepository.findById(roomId)
-            .orElseThrow(() -> new EntityNotFoundException("Room not found with ID"));
-    }
     @Transactional
     public void deleteRoom(Long roomId) {
         Room room = findRoomById(roomId);
         roomRepository.delete(room);
+    }
+    public Room  findRoomById(Long roomId) {
+        return roomRepository.findById(roomId)
+            .orElseThrow(() -> new EntityNotFoundException("Room not found with ID"));
     }
 
     public List<RoomMemberChatListItemResponseDto> findAllFriendsByMemberId(Long givenMemberId) {
