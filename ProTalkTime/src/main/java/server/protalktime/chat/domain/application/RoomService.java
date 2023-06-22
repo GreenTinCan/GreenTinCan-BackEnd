@@ -30,21 +30,36 @@ public class RoomService {
         roomRepository.save(room);
         return room;
     }
+
     @Transactional
-    public void joinChatRoom(Room room , Member member) {
+    public Room createRoomByFlag(Long memberId , String name ,String origin) {
+        Room room = createChatRoom(name,false,origin);
+        Member member = memberService.findByMemberId(memberId);
         RoomMember roomMember = new RoomMember(room,member);
         roomMemberRepository.save(roomMember);
-    }
-    public Room createGatherRoom(Long memberId , String name) {
-        Room room = createChatRoom(name,false,"GATHER");
-        joinChatRoom(room,memberService.findByMemberId(memberId));
         return room;
     }
-    public Room createOntToOneRoom(String name) {
-        return createChatRoom(name,true,"OTO");
-    }
-    public Room createLightningRoom(String name) {
-        return createChatRoom(name,false,"LIGHTNING");
+
+
+    /**
+     * 1 대 1 채팅 또는 랜덤 채팅후 다른 사람과의 채팅을 생성시
+     * @param ownerMemberId : 보내고자 하는 사람
+     * @param guestMemberId : 받는 사람
+     * @param name : 방이름 , 모르면 이름 두개 거삼
+     * @return Room 객체 , Room 의 id 값만 필요할 확률 2000%
+     */
+    @Transactional
+    public Room createPrivateRoom(Long ownerMemberId,Long guestMemberId, String name) {
+        Room room = createChatRoom(name,true,"ONETOONE");
+
+        Member ownerMember = memberService.findByMemberId(ownerMemberId);
+        RoomMember roomOwnerMember = new RoomMember(room,ownerMember);
+        roomMemberRepository.save(roomOwnerMember);
+
+        Member guestMember = memberService.findByMemberId(guestMemberId);
+        RoomMember roomGuestMember = new RoomMember(room,guestMember);
+        roomMemberRepository.save(roomGuestMember);
+        return room;
     }
     public List<Room> getAllRoom() {
         return roomRepository.findAll();

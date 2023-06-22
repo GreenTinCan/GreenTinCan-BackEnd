@@ -5,11 +5,9 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import lombok.Getter;
@@ -17,6 +15,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import server.protalktime.common.model.BaseTimeEntity;
 import server.protalktime.gather.domain.model.Gather;
+import server.protalktime.gather.domain.model.ShortMeet;
 
 @Getter @Setter
 @Entity
@@ -41,6 +40,9 @@ public class Room extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<RoomMember> roomMembers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+    private List<ShortMeet> shortMeets = new ArrayList<>();
 
     public Room(String name , Boolean oneToOneChat ,String givenOrigin) {
         this.name=name ;
