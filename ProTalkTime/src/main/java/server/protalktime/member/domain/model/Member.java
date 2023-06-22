@@ -5,6 +5,9 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import server.protalktime.chat.domain.model.RoomMember;
 import server.protalktime.common.model.BaseTimeEntity;
+import server.protalktime.community.domain.model.Comment;
+import server.protalktime.community.domain.model.Feed;
+import server.protalktime.community.domain.model.FeedLike;
 import server.protalktime.gather.domain.model.Gather;
 import server.protalktime.member.dto.MemberDtos;
 
@@ -61,6 +64,15 @@ public class Member extends BaseTimeEntity{
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<RoomMember> roomMembers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Feed> feeds = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<FeedLike> feedLikes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
 
     @Builder
     private Member(Long id,
