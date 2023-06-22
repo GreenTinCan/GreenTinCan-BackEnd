@@ -42,7 +42,8 @@ public class GatherService {
         return new GatherCreateResponse(room.getId());
     }
 
-    public List<GatherResponseDto> getAllGathersForList(String givenLocation,String givenType) {
+    public List<GatherResponseDto> getAllGathersForList(Long memberId,String givenLocation,String givenType) {
+        memberService.findByMemberId(memberId);
         List<Gather> gathers = gatherRepository.findAll();
 
         List<Gather> filteredGathers = gathers.stream()
@@ -55,7 +56,8 @@ public class GatherService {
             .map(GatherResponseDto::new)
             .collect(Collectors.toList());
     }
-    public GatherDetailDto getGatherDetailByGatherId(Long gatherNumber) {
+    public GatherDetailDto getGatherDetailByGatherId(Long memberId,Long gatherNumber) {
+        memberService.findByMemberId(memberId);
         Gather gather = gatherRepository.findById(gatherNumber)
             .orElseThrow(() -> new EntityNotFoundException("Place not found with ID"));
         return new GatherDetailDto(gather);
@@ -65,5 +67,16 @@ public class GatherService {
         Gather gather = findByGatherId(gatherId);
         Member member = memberService.findByMemberId(memberId);
         return gather.checkMemberEnter(member);
+    }
+
+    public List<GatherResponseDto> getAllGathersBySearchForList(Long memberId,String searchText) {
+        Member member = memberService.findByMemberId(memberId);
+        List<Gather> gathers = gatherRepository.findAll();
+        List<Gather> filteredGathers =gathers.stream()
+            .filter(gather -> gather.getScript().contains(searchText))
+            .toList();
+        return filteredGathers.stream()
+            .map(GatherResponseDto::new)
+            .collect(Collectors.toList());
     }
 }

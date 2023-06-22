@@ -27,18 +27,24 @@ public class GatherApiController {
     public ApiResponse<GatherCreateResponse> createGather(@RequestHeader("Authorization") Long memberId,@RequestBody GatherCreateRequestDto requestDto){
         return ApiResponse.success(gatherService.createGather(memberId,requestDto));
     }
+    @GetMapping(value = "/all",produces = "application/json;charset=UTF-8")
+    public ApiResponse<List<GatherResponseDto>> getGathersForList(@RequestHeader("Authorization") Long memberId,
+                        @RequestParam("gatherLocation") String gatherLocation,
+                        @RequestParam("gatherType") String gatherType) {
+        return ApiResponse.success(gatherService.getAllGathersForList(memberId,gatherLocation,gatherType));
+    }
+
+    @GetMapping(produces = "application/json;charset=UTF-8")
+    public ApiResponse<GatherDetailDto> getGatherDetail(@RequestHeader("Authorization") Long memberId,@RequestParam("gatherId") Long gatherId) {
+        return ApiResponse.success(gatherService.getGatherDetailByGatherId(memberId,gatherId));
+    }
     @GetMapping(value = "/join",produces = "application/json;charset=UTF-8")
     public ApiResponse<String> joinGatherCheck(@RequestHeader("Authorization") Long memberId, @RequestParam("gatherId") Long gatherId){
         return ApiResponse.success(gatherService.checkGather(memberId,gatherId));
     }
-    @GetMapping(value = "/all",produces = "application/json;charset=UTF-8")
-    public ApiResponse<List<GatherResponseDto>> getGathersForList(@RequestParam("gatherLocation") String gatherLocation,
-                        @RequestParam("gatherType") String gatherType) {
-        return ApiResponse.success(gatherService.getAllGathersForList(gatherLocation,gatherType));
-    }
-
-    @GetMapping(produces = "application/json;charset=UTF-8")
-    public ApiResponse<GatherDetailDto> getGatherDetail(@RequestParam("gatherNumber") Long gatherNumber) {
-        return ApiResponse.success(gatherService.getGatherDetailByGatherId(gatherNumber));
+    @GetMapping(value = "/search",produces = "application/json;charset=UTF-8")
+    public ApiResponse<List<GatherResponseDto>> getGathersBySearchForList(@RequestHeader("Authorization") Long memberId,
+                    @RequestParam("searchText") String searchText) {
+        return ApiResponse.success(gatherService.getAllGathersBySearchForList(memberId,searchText));
     }
 }
